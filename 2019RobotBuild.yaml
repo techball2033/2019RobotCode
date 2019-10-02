@@ -17,7 +17,7 @@ Children:
               validators: &id002 [CANID]
               value: '0'
           Base: Victor SPX
-          Name: Front
+          Name: LeftFront
         - Children: []
           Properties:
             CAN ID: !!robotbuilder.data.properties.ChoicesProperty
@@ -27,7 +27,7 @@ Children:
               validators: *id002
               value: '1'
           Base: Victor SPX
-          Name: Back
+          Name: LeftBack
         Properties:
           SpeedController4: !!robotbuilder.data.properties.ChildSelectionProperty {
             default: null, name: SpeedController4, type: PIDOutput, validators: null,
@@ -40,13 +40,13 @@ Children:
             name: SpeedController2
             type: PIDOutput
             validators: &id003 [SpeedControllerGroup, ChildDropdownSelected]
-            value: Back
+            value: LeftBack
           SpeedController1: !!robotbuilder.data.properties.ChildSelectionProperty
             default: 0
             name: SpeedController1
             type: PIDOutput
             validators: &id004 [SpeedControllerGroup, ChildDropdownSelected]
-            value: Front
+            value: LeftFront
         Base: Speed Controller Group
         Name: Left Speed Controller Group
       - Children:
@@ -59,7 +59,7 @@ Children:
               validators: *id002
               value: '2'
           Base: Victor SPX
-          Name: Front
+          Name: RightFront
         - Children: []
           Properties:
             CAN ID: !!robotbuilder.data.properties.ChoicesProperty
@@ -69,7 +69,7 @@ Children:
               validators: *id002
               value: '3'
           Base: Victor SPX
-          Name: Back
+          Name: RightBack
         Properties:
           SpeedController4: !!robotbuilder.data.properties.ChildSelectionProperty {
             default: null, name: SpeedController4, type: PIDOutput, validators: null,
@@ -82,13 +82,13 @@ Children:
             name: SpeedController2
             type: PIDOutput
             validators: *id003
-            value: Back
+            value: RightBack
           SpeedController1: !!robotbuilder.data.properties.ChildSelectionProperty
             default: 0
             name: SpeedController1
             type: PIDOutput
             validators: *id004
-            value: Front
+            value: RightFront
         Base: Speed Controller Group
         Name: Right Speed Controller Group
       Properties:
@@ -161,10 +161,10 @@ Children:
       Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
         name: Requires, type: Subsystem, validators: null, value: None}
       Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
-        default: &id005 []
+        default: []
         name: Parameter presets
         validators: null
-        value: *id005
+        value: []
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
         name: Button on SmartDashboard, validators: null, value: true}
     Base: Command
