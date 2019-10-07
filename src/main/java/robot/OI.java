@@ -31,6 +31,7 @@ public class OI {
     Joystick stick = new Joystick();
     Button button1 = new JoystickButton( , );
     Button button2 = new JoystickButton( , );
+    Button button3 = new JoystickButton( , );
     // There are a few additional built in buttons you can use. Additionally,
     // by subclassing Button you can create custom triggers and bind those to
     // commands the same as any other Button.
@@ -44,6 +45,7 @@ public class OI {
     // button.whenPressed(new ExampleCommand());
     button1.whenPressed(new wrist());
     button2.whenPressed(new hatchMechanism());
+    button3.whenPressed(new Climber());
     // Run the command while the button is being held down and interrupt it once
     // the button is released.
     // button.whileHeld(new ExampleCommand());
