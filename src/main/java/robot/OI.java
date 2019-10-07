@@ -45,7 +45,7 @@ public class OI {
     // button.whenPressed(new ExampleCommand());
     button1.whenPressed(new wrist());
     button2.whenPressed(new hatchMechanism());
-    button3.whenPressed(new Climber());
+    button3.whenPressed(new climber());
     // Run the command while the button is being held down and interrupt it once
     // the button is released.
     // button.whileHeld(new ExampleCommand());
