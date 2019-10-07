@@ -43,7 +43,7 @@ public class OI {
     // until it is finished as determined by it's isFinished method.
     // button.whenPressed(new ExampleCommand());
     button1.whenPressed(new wrist());
-    button2.whenPressed(new HatchMechanism());
+    button2.whenPressed(new hatchMechanism());
     // Run the command while the button is being held down and interrupt it once
     // the button is released.
     // button.whileHeld(new ExampleCommand());
