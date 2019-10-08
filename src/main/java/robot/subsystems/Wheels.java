@@ -8,8 +8,19 @@ public class Wheels{
 
     public Wheels() {
         wheels = new Spark(0);
+
     }
 
-    
+    public void runWheels(double speed)
+    {
+        wheels.set(speed);
+    }
+
+    public void stopWheels()
+    {
+        wheels.set(0);
+    }
+
+
 }
 

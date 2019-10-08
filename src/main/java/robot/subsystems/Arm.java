@@ -1,10 +1,8 @@
 package robot.subsystems;
 
-
-import edu.wpi.first.wpilibj.command.Subsystem;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-public class Arm extends Subsystem {
+public class Arm {
 
     private TalonSRX left;
     private TalonSRX right;
