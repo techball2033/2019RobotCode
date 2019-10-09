@@ -8,7 +8,6 @@ public class Wheels{
 
     public Wheels() {
         wheels = new Spark(0);
-
     }
 
     public void runWheels(double speed)
@@ -21,6 +20,4 @@ public class Wheels{
         wheels.set(0);
     }
 
-
 }
-

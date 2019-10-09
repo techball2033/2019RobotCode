@@ -1,38 +1,41 @@
 package robot.subsystems;  
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class DriveTrain {
 
-    private VictorSPX leftFront;
-    private VictorSPX leftBack;
-    private VictorSPX rightFront;
-    private VictorSPX rightBack;
+    private WPI_VictorSPX leftFront;
+    private WPI_VictorSPX leftBack;
+    private WPI_VictorSPX rightFront;
+    private WPI_VictorSPX rightBack;
+
+    private SpeedControllerGroup leftSpeedGroup; 
+    private SpeedControllerGroup rightSpeedGroup;
+
+    private DifferentialDrive driveType;
 
     public DriveTrain() {
-        leftFront = new VictorSPX(0);
-        leftBack = new VictorSPX(1);
-        rightFront = new VictorSPX(2);
-        rightBack = new VictorSPX(3);
+        leftFront = new WPI_VictorSPX(0);
+        leftBack = new WPI_VictorSPX(1);
+        rightFront = new WPI_VictorSPX(2);
+        rightBack = new WPI_VictorSPX(3);
+
+        leftSpeedGroup = new SpeedControllerGroup(leftFront,leftBack);
+        rightSpeedGroup = new SpeedControllerGroup(rightFront,rightBack);
+
+        driveType = new DifferentialDrive(leftSpeedGroup,rightSpeedGroup);
     }
 
     public void tankDrive(double left, double right)
     {
-        leftFront.set(ControlMode.PercentOutput, left);
-        leftBack.set(ControlMode.PercentOutput, left);
-        rightFront.set(ControlMode.PercentOutput, -right);
-        rightBack.set(ControlMode.PercentOutput, -right);        
-
+        driveType.tankDrive(left, right);
     }
 
-    public void arcadeDrive(double straight, double left, double right)
+    public void arcadeDrive(double speed, double rotation)
     {
-        leftFront.set(ControlMode.PercentOutput, (straight - left + right));
-        leftBack.set(ControlMode.PercentOutput,  (straight - left + right));
-        rightFront.set(ControlMode.PercentOutput, -(straight + left - right));
-        rightBack.set(ControlMode.PercentOutput, -(straight + left - right));   
+        driveType.arcadeDrive(speed, rotation);
     }
 
 }
-

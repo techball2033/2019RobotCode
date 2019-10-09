@@ -20,6 +20,4 @@ public class HatchMechanism {
         hatchSolenoid.set(DoubleSolenoid.Value.kReverse);
     }
 
-
 }
-

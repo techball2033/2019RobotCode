@@ -11,5 +11,11 @@ public class Climber {
 
     }
 
-}
+    public void climb() {
+        climberSolenoid.set(DoubleSolenoid.Value.kForward);
+    }
 
+    public void retract() {
+        climberSolenoid.set(DoubleSolenoid.Value.kReverse);
+    }
+}
