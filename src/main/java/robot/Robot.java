@@ -1,7 +1,10 @@
 package robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.subsystems.*;
 
 /**
@@ -19,6 +22,7 @@ public class Robot extends TimedRobot {
     public static Arm arm;
     public static Climber climber;
     public static HatchMechanism hatchMechanism;
+    public static Joystick joy;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -26,12 +30,16 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
+        //Subsystem init
         driveTrain = new DriveTrain();
         wheels = new Wheels();
         wrist = new Wrist();
         arm = new Arm();
         climber = new Climber();
         hatchMechanism = new HatchMechanism();
+
+        //Joystick init
+        joy = new Joystick(0);
     }
 
     /**
@@ -40,7 +48,6 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void disabledInit(){
-
     }
 
     @Override
@@ -62,6 +69,8 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
+        arm.reset();
+        wrist.reset();
     }
 
     /**
@@ -70,5 +79,16 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+
+        joyStickDrive();
+    }
+
+    private void joyStickDrive() {
+        boolean arcadeSelected = SmartDashboard.getBoolean("DB/Button 0", false);//Dashboard input to choose drive type
+
+        if(arcadeSelected)
+            driveTrain.arcadeDrive(joy.getY(Hand.kRight), joy.getX(Hand.kRight));
+        else
+            driveTrain.tankDrive(joy.getY(Hand.kLeft), joy.getY(Hand.kRight));
     }
 }

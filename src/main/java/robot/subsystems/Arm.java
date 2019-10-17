@@ -3,12 +3,17 @@ package robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
 public class Arm {
 
-    private final int potRange = ;//Range of pot in degrees
-    private final int potOffset = ;//Offset of pot from level
+    private final int potRange = 0;//Range of pot in degrees
+    private final int potOffset = 0;//Offset of pot from level
+
+    private final double p = 0;
+    private final double i = 0;
+    private final double d = 0;
 
     private WPI_TalonSRX left;
     private WPI_TalonSRX right;
@@ -16,6 +21,8 @@ public class Arm {
     private SpeedControllerGroup armGroup; 
 
     private AnalogPotentiometer armPot;
+
+    private PIDController armPID;
 
     public Arm() {
         left = new WPI_TalonSRX(4);
@@ -26,6 +33,12 @@ public class Arm {
         armGroup = new SpeedControllerGroup(left, right);
 
         armPot = new AnalogPotentiometer(6, potRange, potOffset);
+
+        armPID = new PIDController(p, i, d, armPot, armGroup);
+    }
+
+    public void setPosition(double pos) {
+        armPID.setSetpoint(pos);
     }
 
     public void override(double speed) {
@@ -34,5 +47,9 @@ public class Arm {
 
     public void stopArm() {
         armGroup.set(0);
+    }
+
+    public void reset() {
+        armPID.reset();
     }
 }

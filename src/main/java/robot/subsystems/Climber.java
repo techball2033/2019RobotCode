@@ -8,7 +8,6 @@ public class Climber {
 
     public Climber() {
         climberSolenoid = new DoubleSolenoid(0, 0, 1);
-
     }
 
     public void climb() {
