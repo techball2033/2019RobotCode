@@ -1,10 +1,11 @@
 package robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import robot.subsystems.*;
 
 /**
@@ -24,6 +25,10 @@ public class Robot extends TimedRobot {
     public static HatchMechanism hatchMechanism;
     public static Joystick joy;
 
+    private SendableChooser<Byte> driveType;
+    private final Byte arcade = 0;
+    private final Byte tank = 1;
+
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -40,6 +45,13 @@ public class Robot extends TimedRobot {
 
         //Joystick init
         joy = new Joystick(0);
+
+        //Camera init
+        CameraServer.getInstance().startAutomaticCapture();
+
+        driveType = new SendableChooser<>();
+        driveType.setDefaultOption("Arcade", arcade);
+        driveType.addOption("Tank", tank);
     }
 
     /**
@@ -84,11 +96,11 @@ public class Robot extends TimedRobot {
     }
 
     private void joyStickDrive() {
-        boolean arcadeSelected = SmartDashboard.getBoolean("DB/Button 0", false);//Dashboard input to choose drive type
-
-        if(arcadeSelected)
+        if(driveType.getSelected().equals(arcade))
             driveTrain.arcadeDrive(joy.getY(Hand.kRight), joy.getX(Hand.kRight));
-        else
+        else if(driveType.getSelected().equals(tank))
             driveTrain.tankDrive(joy.getY(Hand.kLeft), joy.getY(Hand.kRight));
+        else
+            System.out.println("Error: No drive type chosen");
     }
 }
