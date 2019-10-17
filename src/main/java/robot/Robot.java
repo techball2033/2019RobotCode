@@ -71,6 +71,8 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
+        arm.reset();
+        wrist.reset();
     }
 
     /**
@@ -79,6 +81,8 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        
+        teleopPeriodic();
     }
 
     @Override
@@ -99,7 +103,7 @@ public class Robot extends TimedRobot {
 
     private void joyStickDrive() {
         if(driveType.getSelected().equals(arcade))
-            driveTrain.arcadeDrive(joy.getY(Hand.kRight), joy.getX(Hand.kRight));
+            driveTrain.arcadeDrive(joy.getY(Hand.kRight), joy.getX(Hand.kRight));//CHECK IF JOYSTICK INPUT WORKS
         else if(driveType.getSelected().equals(tank))
             driveTrain.tankDrive(joy.getY(Hand.kLeft), joy.getY(Hand.kRight));
         else
