@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.subsystems.*;
 
 /**
@@ -52,6 +53,7 @@ public class Robot extends TimedRobot {
         driveType = new SendableChooser<>();
         driveType.setDefaultOption("Arcade", arcade);
         driveType.addOption("Tank", tank);
+        SmartDashboard.putData("Drive Type", driveType);
     }
 
     /**
