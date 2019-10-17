@@ -7,16 +7,14 @@ public class HatchMechanism {
     private DoubleSolenoid hatchSolenoid;
 
     public HatchMechanism() {
-        hatchSolenoid = new DoubleSolenoid(0, 2);
+        hatchSolenoid = new DoubleSolenoid(1, 0);
     }
 
-    public void place()
-    {
+    public void place() {
         hatchSolenoid.set(DoubleSolenoid.Value.kForward);
     }
 
-    public void retract()
-    {
+    public void retract() {
         hatchSolenoid.set(DoubleSolenoid.Value.kReverse);
     }
 

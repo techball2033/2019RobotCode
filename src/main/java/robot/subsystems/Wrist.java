@@ -20,24 +20,27 @@ public class Wrist {
     private PIDController wristPID;
 
     public Wrist() {
-        wrist = new Spark(1);
+        wrist = new Spark(5);
         wrist.setInverted(false);
 
-        wristPot = new AnalogPotentiometer(7, potRange, potOffset);
+        wristPot = new AnalogPotentiometer(1, potRange, potOffset);
 
         wristPID = new PIDController(p, i, d, wristPot, wrist);
+        wristPID.setOutputRange(-1, 1);
     }
 
     public void setPosition(double pos) {
+        wristPID.enable();
         wristPID.setSetpoint(pos);
     }
 
     public void override(double speed) {
+        wristPID.disable();
         wrist.set(speed);
     }
 
     public void stopArm() {
-        wrist.set(0);
+        override(0);
     }
 
     public void reset() {

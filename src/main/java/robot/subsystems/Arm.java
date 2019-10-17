@@ -32,21 +32,24 @@ public class Arm {
 
         armGroup = new SpeedControllerGroup(left, right);
 
-        armPot = new AnalogPotentiometer(6, potRange, potOffset);
+        armPot = new AnalogPotentiometer(0, potRange, potOffset);
 
         armPID = new PIDController(p, i, d, armPot, armGroup);
+        armPID.setOutputRange(-1, 1);
     }
 
     public void setPosition(double pos) {
+        armPID.enable();
         armPID.setSetpoint(pos);
     }
 
     public void override(double speed) {
+        armPID.disable();
         armGroup.set(speed);
     }
 
     public void stopArm() {
-        armGroup.set(0);
+        override(0);
     }
 
     public void reset() {

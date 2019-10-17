@@ -1,9 +1,7 @@
 package robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -24,7 +22,7 @@ public class Robot extends TimedRobot {
     public static Arm arm;
     public static Climber climber;
     public static HatchMechanism hatchMechanism;
-    public static Joystick joy;
+    public static Controller joy;
 
     private SendableChooser<Byte> driveType;
     private final Byte arcade = 0;
@@ -45,7 +43,7 @@ public class Robot extends TimedRobot {
         hatchMechanism = new HatchMechanism();
 
         //Joystick init
-        joy = new Joystick(0);
+        joy = new Controller(0);
 
         //Camera init
         CameraServer.getInstance().startAutomaticCapture();
@@ -71,8 +69,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        arm.reset();
-        wrist.reset();
+        teleopInit();
     }
 
     /**
@@ -99,14 +96,40 @@ public class Robot extends TimedRobot {
         Scheduler.getInstance().run();
 
         joyStickDrive();
+        joyStickWheels();
+        joyStickHatch();
+        joyStickClimb();
+        joyStickArm();
     }
 
     private void joyStickDrive() {
         if(driveType.getSelected().equals(arcade))
-            driveTrain.arcadeDrive(joy.getY(Hand.kRight), joy.getX(Hand.kRight));//CHECK IF JOYSTICK INPUT WORKS
+            driveTrain.arcadeDrive(joy.getRightYAxis(), joy.getRightXAxis());//CHECK IF JOYSTICK INPUT WORKS
         else if(driveType.getSelected().equals(tank))
-            driveTrain.tankDrive(joy.getY(Hand.kLeft), joy.getY(Hand.kRight));
+            driveTrain.tankDrive(joy.getLeftYAxis(), joy.getRightYAxis());
         else
             System.out.println("Error: No drive type chosen");
+    }
+
+    private void joyStickWheels() {
+        wheels.runWheels(joy.getRightTrigger()-joy.getLeftTrigger());
+    }
+
+    private void joyStickHatch() {
+        if(joy.getDPadRight())
+            hatchMechanism.place();
+        else if(joy.getDPadLeft())
+            hatchMechanism.retract();
+    }
+
+    private void joyStickClimb() {
+        if(joy.getDPadUp())
+            climber.climb();
+        else if(joy.getDPadDown())
+            climber.retract();
+    }
+
+    private void joyStickArm() {
+        
     }
 }

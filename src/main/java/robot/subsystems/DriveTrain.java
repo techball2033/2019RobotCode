@@ -28,13 +28,11 @@ public class DriveTrain {
         driveType = new DifferentialDrive(leftSpeedGroup,rightSpeedGroup);
     }
 
-    public void tankDrive(double left, double right)
-    {
+    public void tankDrive(double left, double right) {
         driveType.tankDrive(left, right);
     }
 
-    public void arcadeDrive(double speed, double rotation)
-    {
+    public void arcadeDrive(double speed, double rotation) {
         driveType.arcadeDrive(speed, rotation);
     }
 
