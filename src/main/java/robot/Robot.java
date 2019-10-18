@@ -104,7 +104,7 @@ public class Robot extends TimedRobot {
 
     private void joyStickDrive() {
         if(driveType.getSelected().equals(arcade))
-            driveTrain.arcadeDrive(joy.getRightYAxis(), joy.getRightXAxis());//CHECK IF JOYSTICK INPUT WORKS
+            driveTrain.arcadeDrive(joy.getRightYAxis(), joy.getLeftTrigger(), joy.getRightTrigger());//CHECK IF JOYSTICK INPUT WORKS
         else if(driveType.getSelected().equals(tank))
             driveTrain.tankDrive(joy.getLeftYAxis(), joy.getRightYAxis());
         else
