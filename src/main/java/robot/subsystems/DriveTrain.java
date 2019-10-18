@@ -34,8 +34,8 @@ public class DriveTrain {
     }
 
     public void arcadeDrive(double straight, double left, double right) { 
-        leftSpeedGroup.set(straight - left + right);
-        rightSpeedGroup.set (-(straight + left - right)); 
+        leftSpeedGroup.set(straight + left - right);
+        rightSpeedGroup.set (-(straight - left + right)); 
     }
 
     public void arcadeDrive(double speed, double rotation) {

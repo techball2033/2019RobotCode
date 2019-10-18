@@ -23,7 +23,7 @@ public class Robot extends TimedRobot {
     public static Climber climber;
     public static HatchMechanism hatchMechanism;
     public static Controller joy;
-
+    public static Operator op;
     private SendableChooser<Byte> driveType;
     private final Byte arcade = 0;
     private final Byte tank = 1;
@@ -36,11 +36,7 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         //Subsystem init
         driveTrain = new DriveTrain();
-        wheels = new Wheels();
-        wrist = new Wrist();
-        arm = new Arm();
-        climber = new Climber();
-        hatchMechanism = new HatchMechanism();
+        op = new Operator();
 
         //Joystick init
         joy = new Controller(0);
@@ -96,10 +92,7 @@ public class Robot extends TimedRobot {
         Scheduler.getInstance().run();
 
         joyStickDrive();
-        joyStickWheels();
-        joyStickHatch();
-        joyStickClimb();
-        joyStickArm();
+        op.runOpControls();
     }
 
     private void joyStickDrive() {
