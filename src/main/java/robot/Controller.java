@@ -10,19 +10,19 @@ public class Controller extends Joystick {
 
     //Buttons
     public boolean getXButton() {
-        return getRawButton(3);
-    }
-
-    public boolean getYButton() {
-        return getRawButton(4);
-    }
-
-    public boolean getBButton() {
         return getRawButton(2);
     }
 
-    public boolean getAButton() {
+    public boolean getOButton() {
+        return getRawButton(3);
+    }
+
+    public boolean getSquareButton() {
         return getRawButton(1);
+    }
+
+    public boolean getTriangleButton() {
+        return getRawButton(4);
     }
 
     public boolean getRightBumper() {
@@ -47,7 +47,7 @@ public class Controller extends Joystick {
     }
 
     public double getRightXAxis() {
-        return getRawAxis(4);
+        return getRawAxis(2);
     }
 
     public double getLeftTrigger() {
