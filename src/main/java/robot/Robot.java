@@ -3,9 +3,6 @@ package robot;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import robot.subsystems.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -16,17 +13,8 @@ import robot.subsystems.*;
  */
 public class Robot extends TimedRobot {
 
-    public static DriveTrain driveTrain;
-    public static Wheels wheels;
-    public static Wrist wrist;
-    public static Arm arm;
-    public static Climber climber;
-    public static HatchMechanism hatchMechanism;
-    public static Controller joy;
+    public static Driver drive;
     public static Operator op;
-    private SendableChooser<Byte> driveType;
-    private final Byte arcade = 0;
-    private final Byte tank = 1;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -34,20 +22,12 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        //Subsystem init
-        driveTrain = new DriveTrain();
-        op = new Operator();
-
-        //Joystick init
-        joy = new Controller(0);
+        //Controller init
+        drive = new Driver(0);
+        op = new Operator(1);
 
         //Camera init
         CameraServer.getInstance().startAutomaticCapture();
-
-        driveType = new SendableChooser<>();
-        driveType.setDefaultOption("Arcade", arcade);
-        driveType.addOption("Tank", tank);
-        SmartDashboard.putData("Drive Type", driveType);
     }
 
     /**
@@ -80,8 +60,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        arm.reset();
-        wrist.reset();
+        op.resetPID();
     }
 
     /**
@@ -91,38 +70,7 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
 
-        joyStickDrive();
+        drive.runDriveControls();
         op.runOpControls();
-    }
-
-    private void joyStickDrive() {
-        if(driveType.getSelected().equals(arcade))
-            driveTrain.arcadeDrive(joy.getRightYAxis(), joy.getLeftTrigger(), joy.getRightTrigger());//CHECK IF JOYSTICK INPUT WORKS
-        else if(driveType.getSelected().equals(tank))
-            driveTrain.tankDrive(joy.getLeftYAxis(), joy.getRightYAxis());
-        else
-            System.out.println("Error: No drive type chosen");
-    }
-
-    private void joyStickWheels() {
-        wheels.runWheels(joy.getRightTrigger()-joy.getLeftTrigger());
-    }
-
-    private void joyStickHatch() {
-        if(joy.getDPadRight())
-            hatchMechanism.place();
-        else if(joy.getDPadLeft())
-            hatchMechanism.retract();
-    }
-
-    private void joyStickClimb() {
-        if(joy.getDPadUp())
-            climber.climb();
-        else if(joy.getDPadDown())
-            climber.retract();
-    }
-
-    private void joyStickArm() {
-        
     }
 }

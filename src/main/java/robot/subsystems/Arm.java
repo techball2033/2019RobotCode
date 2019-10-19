@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
 public class Arm {
 
-    private final int potRange = 2000;//Range of pot in degrees
-    private final int potOffset = -1000;//Offset of pot from level
+    private final int potRange = 0;//Range of pot in degrees
+    private final int potOffset = 0;//Offset of pot from level
 
     private final double p = 0.85;
     private final double i = 0.01;
