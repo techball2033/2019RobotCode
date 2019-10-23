@@ -13,6 +13,8 @@ public class Wrist {
     private final double i = 0.006;
     private final double d = 0;
 
+    private final double maxSpeed = 1;
+
     private Spark wrist;
 
     private AnalogPotentiometer wristPot;
@@ -26,7 +28,7 @@ public class Wrist {
         wristPot = new AnalogPotentiometer(1, potRange, potOffset);
 
         wristPID = new PIDController(p, i, d, wristPot, wrist);
-        wristPID.setOutputRange(-1, 1);
+        wristPID.setOutputRange(-maxSpeed, maxSpeed);
     }
 
     public void setPosition(double pos) {

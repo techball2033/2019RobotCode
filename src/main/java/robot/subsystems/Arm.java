@@ -15,6 +15,8 @@ public class Arm {
     private final double i = 0.01;
     private final double d = 0;
 
+    private final double maxSpeed = 1;
+
     private WPI_TalonSRX left;
     private WPI_TalonSRX right;
 
@@ -35,7 +37,7 @@ public class Arm {
         armPot = new AnalogPotentiometer(0, potRange, potOffset);
 
         armPID = new PIDController(p, i, d, armPot, armGroup);
-        armPID.setOutputRange(-1, 1);
+        armPID.setOutputRange(-maxSpeed, maxSpeed);
     }
 
     public void setPosition(double pos) {
