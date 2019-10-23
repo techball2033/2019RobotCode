@@ -48,4 +48,8 @@ public class Wrist {
     public void reset() {
         wristPID.reset();
     }
+
+    public AnalogPotentiometer getPot() {
+        return wristPot;
+    }
 }

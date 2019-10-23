@@ -58,6 +58,14 @@ public class Operator {
         wrist.reset();
     }
 
+    public double getWristAngle() {
+        return wrist.getPot().get();
+    }
+
+    public double getArmAngle() {
+        return arm.getPot().get();
+    } 
+
     private void wheelControl() {
         if (op.getRightBumper()) {
             wheels.runWheels(WHEELS_SPEED_IN);

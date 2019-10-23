@@ -57,4 +57,8 @@ public class Arm {
     public void reset() {
         armPID.reset();
     }
+
+    public AnalogPotentiometer getPot() {
+        return armPot;
+    }
 }
