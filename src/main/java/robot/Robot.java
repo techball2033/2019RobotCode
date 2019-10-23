@@ -73,4 +73,15 @@ public class Robot extends TimedRobot {
         drive.runDriveControls();
         op.runOpControls();
     }
+
+    @Override
+    public void testInit() {
+        op.resetPID();
+    }
+
+    @Override
+    public void testPeriodic() {
+        Scheduler.getInstance().run();
+
+    }
 }

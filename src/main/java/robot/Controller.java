@@ -34,11 +34,11 @@ public class Controller extends Joystick {
     }
 
     public boolean getLeftStickButton() {
-        return getRawButton(8);//PLACEHOLDER VALUE
+        return getRawButton(11);
     }
 
     public boolean getRightStickButton() {
-        return getRawButton(9);//PLACEHOLDER VALUE
+        return getRawButton(12);
     }
 
     //Analog sticks
