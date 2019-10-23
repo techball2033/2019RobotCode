@@ -73,4 +73,17 @@ public class Robot extends TimedRobot {
         drive.runDriveControls();
         op.runOpControls();
     }
+
+    @Override
+    public void testInit() {
+        op.resetPID();
+    }
+
+    @Override
+    public void testPeriodic() {
+        Scheduler.getInstance().run();
+
+        System.out.println("Wrist angle: " + op.getWristAngle());
+        System.out.println("Arm angle: " + op.getArmAngle());
+    }
 }

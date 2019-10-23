@@ -27,6 +27,7 @@ public class DriveTrain {
         rightSpeedGroup = new SpeedControllerGroup(rightFront,rightBack);
 
         driveType = new DifferentialDrive(leftSpeedGroup,rightSpeedGroup);
+        driveType.setSafetyEnabled(false);
     }
 
     public void tankDrive(double left, double right) {
@@ -35,7 +36,7 @@ public class DriveTrain {
 
     public void arcadeDrive(double straight, double left, double right) { 
         leftSpeedGroup.set(straight + left - right);
-        rightSpeedGroup.set (-(straight - left + right)); 
+        rightSpeedGroup.set(-(straight - left + right)); 
     }
 
     public void arcadeDrive(double speed, double rotation) {

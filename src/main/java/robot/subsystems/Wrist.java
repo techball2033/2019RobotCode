@@ -6,8 +6,8 @@ import edu.wpi.first.wpilibj.Spark;
 
 public class Wrist {
 
-    private final int potRange = 0;//Range of pot in degrees
-    private final int potOffset = 0;//Offset of pot from level
+    private final int potRange = 2000;//Range of pot in degrees
+    private final int potOffset = -1000;//Offset of pot from level
 
     private final double p = 3;
     private final double i = 0.006;
@@ -47,5 +47,9 @@ public class Wrist {
 
     public void reset() {
         wristPID.reset();
+    }
+
+    public AnalogPotentiometer getPot() {
+        return wristPot;
     }
 }

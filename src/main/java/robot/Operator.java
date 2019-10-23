@@ -3,31 +3,34 @@ package robot;
 import robot.subsystems.*;
 
 public class Operator {
-    public static final double ARM_TOP_ROCKET_BALL = 0;
-    public static final double ARM_MID_ROCKET_BALL = 0;
-    public static final double ARM_BOT_ROCKET_BALL = 0;
+    public static final double ARM_TOP_ROCKET_BALL = 226;
+    public static final double ARM_MID_ROCKET_BALL = -343;
+    public static final double ARM_BOT_ROCKET_BALL = -683;
     //--------------------------------------------------------------
-    //public static final double ARM_TOP_ROCKET_HATCH = ;
-    public static final double ARM_MID_ROCKET_HATCH = 0;
-    public static final double ARM_BOT_ROCKET_HATCH = 0;
-    public static final double WRIST_MID_ROCKET_HATCH = 0;
-    public static final double WRIST_BOT_ROCKET_HATCH = 0;
+    public static final double WRIST_TOP_ROCKET_BALL = -763;
+    public static final double WRIST_MID_ROCKET_BALL = -31;
+    public static final double WRIST_BOT_ROCKET_BALL = 155;
+    //--------------------------------------------------------------
+    public static final double ARM_MID_ROCKET_HATCH = -374;
+    public static final double ARM_BOT_ROCKET_HATCH = -793;
+    //--------------------------------------------------------------
+    public static final double WRIST_MID_ROCKET_HATCH = 335;
+    public static final double WRIST_BOT_ROCKET_HATCH = 720;
     //--------------------------------------------------------------
     public static final double ARM_CARGO_BALL = 0;
     public static final double ARM_CARGO_HATCH = 0;
+    //--------------------------------------------------------------
     public static final double WRIST_CARGO_BALL = 0;
     public static final double WRIST_CARGO_HATCH = 0;
     //--------------------------------------------------------------
-    public static final double WRIST_TOP_ROCKET_BALL = 0;
-    public static final double WRIST_MID_ROCKET_BALL = 0;
-    public static final double WRIST_BOT_ROCKET_BALL = 0;
-
+    public static final double ARM_GND_HATCH = -450;
+    public static final double WRIST_GND_HATCH = -860;
     //--------------------------------------------------------------
-    public static final double ARM_STARTUP = 0;
-    public static final double WRIST_STARTUP = 0;
+    public static final double ARM_STARTUP = -763;
+    public static final double WRIST_STARTUP = 785;
     //--------------------------------------------------------------
-    public static final double WHEELS_SPEED_IN = 0;
-    public static final double WHEELS_SPEED_OUT = 0;
+    public static final double WHEELS_SPEED_IN = 1;
+    public static final double WHEELS_SPEED_OUT = -1;
 
     Controller op;
     Arm arm;
@@ -54,6 +57,14 @@ public class Operator {
         arm.reset();
         wrist.reset();
     }
+
+    public double getWristAngle() {
+        return wrist.getPot().get();
+    }
+
+    public double getArmAngle() {
+        return arm.getPot().get();
+    } 
 
     private void wheelControl() {
         if (op.getRightBumper()) {
