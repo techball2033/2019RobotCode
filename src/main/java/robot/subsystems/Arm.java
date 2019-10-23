@@ -8,12 +8,14 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
 public class Arm {
 
-    private final int potRange = 2000;//Range of pot in degrees
-    private final int potOffset = -1000;//Offset of pot from level
+    private final int potRange = 0;//Range of pot in degrees
+    private final int potOffset = 0;//Offset of pot from level
 
     private final double p = 0.85;
     private final double i = 0.01;
     private final double d = 0;
+
+    private final double maxSpeed = 1;
 
     private WPI_TalonSRX left;
     private WPI_TalonSRX right;
@@ -35,7 +37,7 @@ public class Arm {
         armPot = new AnalogPotentiometer(0, potRange, potOffset);
 
         armPID = new PIDController(p, i, d, armPot, armGroup);
-        armPID.setOutputRange(-1, 1);
+        armPID.setOutputRange(-maxSpeed, maxSpeed);
     }
 
     public void setPosition(double pos) {

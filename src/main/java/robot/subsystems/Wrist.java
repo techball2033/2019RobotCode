@@ -6,12 +6,14 @@ import edu.wpi.first.wpilibj.Spark;
 
 public class Wrist {
 
-    private final int potRange = 2000;//Range of pot in degrees
-    private final int potOffset = -1000;//Offset of pot from level
+    private final int potRange = 0;//Range of pot in degrees
+    private final int potOffset = 0;//Offset of pot from level
 
     private final double p = 3;
     private final double i = 0.006;
     private final double d = 0;
+
+    private final double maxSpeed = 1;
 
     private Spark wrist;
 
@@ -26,7 +28,7 @@ public class Wrist {
         wristPot = new AnalogPotentiometer(1, potRange, potOffset);
 
         wristPID = new PIDController(p, i, d, wristPot, wrist);
-        wristPID.setOutputRange(-1, 1);
+        wristPID.setOutputRange(-maxSpeed, maxSpeed);
     }
 
     public void setPosition(double pos) {
