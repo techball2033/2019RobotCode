@@ -105,6 +105,11 @@ public class Operator {
                 wrist.stopWrist();
             }
         }
+        else {
+            if(!wrist.isPIDEnabled()) {
+                wrist.stopWrist();
+            }
+        }
 
         //Arm override controlled by left stick
         if(op.getLeftStickButton()) {
@@ -112,6 +117,11 @@ public class Operator {
                 arm.override(op.getLeftYAxis());
             }
             else {
+                arm.stopArm();
+            }
+        }
+        else {
+            if(!arm.isPIDEnabled()) {
                 arm.stopArm();
             }
         }
