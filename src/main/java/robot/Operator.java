@@ -77,6 +77,11 @@ public class Operator {
     } 
 
     private void wheelControl() {
+        if (getWristAngle() > (WRIST_STARTUP - OVERRIDE_TOLERANCE)) {
+            System.out.println("Wheels cannot spin as the wrist is too close to the arm");
+            return;
+        }
+
         if (op.getRightBumper()) {
             wheels.runWheels(WHEELS_SPEED_IN);
         }
@@ -95,7 +100,7 @@ public class Operator {
                 wrist.override(op.getRightYAxis());
             }
 
-            else if((op.getRightYAxis() < 0) && (getWristAngle() >= (WRIST_LOW_RANGE + OVERRIDE_TOLERANCE))) {
+            else if((op.getRightYAxis() < 0) && (getWristAngle() > (WRIST_LOW_RANGE + OVERRIDE_TOLERANCE))) {
                 wrist.override(op.getRightYAxis());
             }
 
@@ -110,7 +115,7 @@ public class Operator {
                 arm.override(op.getLeftYAxis());
             }
 
-            else if((op.getLeftYAxis() < 0) && (getArmAngle() >= (ARM_LOW_RANGE + OVERRIDE_TOLERANCE))) {
+            else if((op.getLeftYAxis() < 0) && (getArmAngle() > (ARM_LOW_RANGE + OVERRIDE_TOLERANCE))) {
                 arm.override(op.getLeftYAxis());
             }
 
