@@ -53,4 +53,8 @@ public class Wrist {
     public AnalogPotentiometer getPot() {
         return wristPot;
     }
+    
+    public boolean isPIDEnabled() {
+        return wristPID.isEnabled();
+    }
 }

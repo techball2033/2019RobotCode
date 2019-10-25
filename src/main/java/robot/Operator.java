@@ -77,6 +77,13 @@ public class Operator {
     } 
 
     private void wheelControl() {
+        if (getWristAngle() > (WRIST_STARTUP - OVERRIDE_TOLERANCE)) {
+            System.out.println("Wheels cannot spin as the wrist is too close to the arm");
+            wheels.stopWheels();
+            
+            return;
+        }
+
         if (op.getRightBumper()) {
             wheels.runWheels(WHEELS_SPEED_IN);
         }
@@ -91,30 +98,30 @@ public class Operator {
     private void armWristOverride() {
         //Wrist override controlled by right stick
         if(op.getRightStickButton()) {
-            if((op.getRightYAxis() > 0) && (getWristAngle() < (WRIST_HIGH_RANGE - OVERRIDE_TOLERANCE))) {
+            if(((op.getRightYAxis() > 0) && (getWristAngle() < (WRIST_HIGH_RANGE - OVERRIDE_TOLERANCE))) || ((op.getRightYAxis() < 0) && (getWristAngle() > (WRIST_LOW_RANGE + OVERRIDE_TOLERANCE)))) {
                 wrist.override(op.getRightYAxis());
             }
-
-            else if((op.getRightYAxis() < 0) && (getWristAngle() >= (WRIST_LOW_RANGE + OVERRIDE_TOLERANCE))) {
-                wrist.override(op.getRightYAxis());
-            }
-
             else {
+                wrist.stopWrist();
+            }
+        }
+        else {
+            if(!wrist.isPIDEnabled()) {
                 wrist.stopWrist();
             }
         }
 
         //Arm override controlled by left stick
         if(op.getLeftStickButton()) {
-            if((op.getLeftYAxis() > 0) && (getArmAngle() < (ARM_HIGH_RANGE - OVERRIDE_TOLERANCE))) {
+            if(((op.getLeftYAxis() > 0) && (getArmAngle() < (ARM_HIGH_RANGE - OVERRIDE_TOLERANCE))) || ((op.getLeftYAxis() < 0) && (getArmAngle() > (ARM_LOW_RANGE + OVERRIDE_TOLERANCE)))) {
                 arm.override(op.getLeftYAxis());
             }
-
-            else if((op.getLeftYAxis() < 0) && (getArmAngle() >= (ARM_LOW_RANGE + OVERRIDE_TOLERANCE))) {
-                arm.override(op.getLeftYAxis());
-            }
-
             else {
+                arm.stopArm();
+            }
+        }
+        else {
+            if(!arm.isPIDEnabled()) {
                 arm.stopArm();
             }
         }
