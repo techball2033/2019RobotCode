@@ -29,8 +29,18 @@ public class Operator {
     public static final double ARM_STARTUP = -763;
     public static final double WRIST_STARTUP = 785;
     //--------------------------------------------------------------
-    public static final double WHEELS_SPEED_IN = 1;
-    public static final double WHEELS_SPEED_OUT = -1;
+    public static final double WHEELS_SPEED_IN = 0.7;
+    public static final double WHEELS_SPEED_OUT = -0.7;
+
+    //Range of arm and wrist
+    public static final double WRIST_LOW_RANGE = ;
+    public static final double WRIST_HIGH_RANGE = WRIST_STARTUP;
+
+    public static final double ARM_LOW_RANGE = ARM_STARTUP;
+    public static final double ARM_HIGH_RANGE = ;
+
+    //Tolerance for limiting override range
+    public static final double OVERRIDE_TOLERANCE = 2;
 
     Controller op;
     Arm arm;
@@ -73,14 +83,40 @@ public class Operator {
         else if (op.getLeftBumper()) {
             wheels.runWheels(WHEELS_SPEED_OUT);
         }
+        else {
+            wheels.stopWheels();
+        }
     }
 
     private void armWristOverride() {
+        //Wrist override controlled by right stick
         if(op.getRightStickButton()) {
-            wrist.override(op.getRightYAxis());
+            if((op.getRightYAxis() > 0) && (getWristAngle() < (WRIST_HIGH_RANGE - OVERRIDE_TOLERANCE))) {
+                wrist.override(op.getRightYAxis());
+            }
+
+            else if((op.getRightYAxis() < 0) && (getWristAngle() >= (WRIST_LOW_RANGE + OVERRIDE_TOLERANCE))) {
+                wrist.override(op.getRightYAxis());
+            }
+
+            else {
+                wrist.stopWrist();
+            }
         }
+
+        //Arm override controlled by left stick
         if(op.getLeftStickButton()) {
-            arm.override(op.getLeftYAxis());
+            if((op.getLeftYAxis() > 0) && (getArmAngle() < (ARM_HIGH_RANGE - OVERRIDE_TOLERANCE))) {
+                arm.override(op.getLeftYAxis());
+            }
+
+            else if((op.getLeftYAxis() < 0) && (getArmAngle() >= (ARM_LOW_RANGE + OVERRIDE_TOLERANCE))) {
+                arm.override(op.getLeftYAxis());
+            }
+
+            else {
+                arm.stopArm();
+            }
         }
     }
 
