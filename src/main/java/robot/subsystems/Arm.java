@@ -39,10 +39,16 @@ public class Arm {
         armPID = new PIDController(p, i, d, armPot, armGroup);
         armPID.setOutputRange(-maxSpeed, maxSpeed);
     }
+    public double getArmAngle() {
+        return arm.getPot().get();
+    } 
 
     public void setPosition(double pos) {
-        armPID.enable();
-        armPID.setSetpoint(pos);
+        while(!(getArmAngle == 0 && armPID < 0) && !(getArmAngle == 1000 && armPID > 0))
+        {
+            armPID.enable();
+            armPID.setSetpoint(pos);
+        }
     }
 
     public void override(double speed) {
