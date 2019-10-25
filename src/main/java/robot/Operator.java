@@ -96,14 +96,9 @@ public class Operator {
     private void armWristOverride() {
         //Wrist override controlled by right stick
         if(op.getRightStickButton()) {
-            if((op.getRightYAxis() > 0) && (getWristAngle() < (WRIST_HIGH_RANGE - OVERRIDE_TOLERANCE))) {
+            if(((op.getRightYAxis() > 0) && (getWristAngle() < (WRIST_HIGH_RANGE - OVERRIDE_TOLERANCE))) || ((op.getRightYAxis() < 0) && (getWristAngle() > (WRIST_LOW_RANGE + OVERRIDE_TOLERANCE)))) {
                 wrist.override(op.getRightYAxis());
             }
-
-            else if((op.getRightYAxis() < 0) && (getWristAngle() > (WRIST_LOW_RANGE + OVERRIDE_TOLERANCE))) {
-                wrist.override(op.getRightYAxis());
-            }
-
             else {
                 wrist.stopWrist();
             }
@@ -111,14 +106,9 @@ public class Operator {
 
         //Arm override controlled by left stick
         if(op.getLeftStickButton()) {
-            if((op.getLeftYAxis() > 0) && (getArmAngle() < (ARM_HIGH_RANGE - OVERRIDE_TOLERANCE))) {
+            if(((op.getLeftYAxis() > 0) && (getArmAngle() < (ARM_HIGH_RANGE - OVERRIDE_TOLERANCE))) || ((op.getLeftYAxis() < 0) && (getArmAngle() > (ARM_LOW_RANGE + OVERRIDE_TOLERANCE)))) {
                 arm.override(op.getLeftYAxis());
             }
-
-            else if((op.getLeftYAxis() < 0) && (getArmAngle() > (ARM_LOW_RANGE + OVERRIDE_TOLERANCE))) {
-                arm.override(op.getLeftYAxis());
-            }
-
             else {
                 arm.stopArm();
             }
