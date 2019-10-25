@@ -62,4 +62,8 @@ public class Arm {
     public AnalogPotentiometer getPot() {
         return armPot;
     }
+    
+    public boolean isPIDEnabled() {
+        return armPID.isEnabled();
+    }
 }
