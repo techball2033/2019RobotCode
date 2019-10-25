@@ -44,7 +44,7 @@ public class Arm {
     } 
 
     public void setPosition(double pos) {
-        while(!(getArmAngle == 0 && armPID < 0) && !(getArmAngle == 1000 && armPID > 0))
+        while(!(getArmAngle == 0 && armPID < 0) && !(getArmAngle == 1000 && armPID > 0)) //Find rigt numbers to max and min 
         {
             armPID.enable();
             armPID.setSetpoint(pos);
