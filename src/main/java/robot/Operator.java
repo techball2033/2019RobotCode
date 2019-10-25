@@ -79,6 +79,8 @@ public class Operator {
     private void wheelControl() {
         if (getWristAngle() > (WRIST_STARTUP - OVERRIDE_TOLERANCE)) {
             System.out.println("Wheels cannot spin as the wrist is too close to the arm");
+            wheels.stopWheels();
+            
             return;
         }
 
