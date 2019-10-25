@@ -7,7 +7,7 @@ public class HatchMechanism {
     private DoubleSolenoid hatchSolenoid;
 
     public HatchMechanism() {
-        hatchSolenoid = new DoubleSolenoid(1, 0);
+        hatchSolenoid = new DoubleSolenoid(6, 1, 0);
     }
 
     public void place() {
