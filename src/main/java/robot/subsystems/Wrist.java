@@ -28,7 +28,7 @@ public class Wrist {
         wristPot = new AnalogPotentiometer(1, potRange, potOffset);
 
         wristPID = new PIDController(p, i, d, wristPot, wrist);
-        wristPID.setInputRange(-potOffset, potRange-potOffset);
+        wristPID.setInputRange(potOffset, potRange+potOffset);
         wristPID.setOutputRange(-maxSpeed, maxSpeed);
     }
 

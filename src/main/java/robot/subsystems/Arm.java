@@ -37,7 +37,7 @@ public class Arm {
         armPot = new AnalogPotentiometer(0, potRange, potOffset);
 
         armPID = new PIDController(p, i, d, armPot, armGroup);
-        armPID.setInputRange(-potOffset, potRange-potOffset);
+        armPID.setInputRange(potOffset, potRange+potOffset);
         armPID.setOutputRange(-maxSpeed, maxSpeed);
     }
 
