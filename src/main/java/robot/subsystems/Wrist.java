@@ -24,7 +24,7 @@ public class Wrist {
     public Wrist() {
         wrist = new Spark(5);
         wrist.setInverted(true);
-
+      
         wristPot = new AnalogPotentiometer(1, potRange, potOffset);
 
         wristPID = new PIDController(p, i, d, wristPot, wrist);

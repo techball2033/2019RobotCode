@@ -39,7 +39,6 @@ public class Operator {
 
     // Tolerance for limiting override range
     public static double OVERRIDE_TOLERANCE = 2;
-
     Controller op;
     Arm arm;
     HatchMechanism hatch;
@@ -102,31 +101,22 @@ public class Operator {
         return wrist.getPot().get();
     }
 
-    public double getArmAngle() {
-        return arm.getPot().get();
-    }
-
     private void wheelControl() {
         if (getWristAngle() > (WRIST_STARTUP - OVERRIDE_TOLERANCE)) {
             System.out.println("Wheels cannot spin as the wrist is too close to the arm");
             wheels.stopWheels();
-
-            return;
         }
 
         if (op.getRightBumper()) {
             wheels.runWheels(WHEELS_SPEED_IN);
         } else if (op.getLeftBumper()) {
             wheels.runWheels(WHEELS_SPEED_OUT);
-        } else {
-            wheels.stopWheels();
+        } else if (op.getLeftBumper()) {
+            wheels.runWheels(WHEELS_SPEED_OUT);
         }
     }
 
     private void armWristOverride() {
-//        System.out.println("Wrist control: " + op.getRightYAxis());
-        // Wrist override controlled by right stick
-
         if (op.getRightStickButton()) {
             if ((op.getRightYAxis() < 0) && (getWristAngle() < (WRIST_HIGH_RANGE - OVERRIDE_TOLERANCE))) {
                 wrist.override(-op.getRightYAxis() / 2);
@@ -161,20 +151,28 @@ public class Operator {
         if (op.getOButton()) {
             arm.setPosition(ARM_MID_ROCKET_HATCH);
             wrist.setPosition(WRIST_MID_ROCKET_HATCH);
-        } else if (op.getXButton()) {
-            arm.setPosition(ARM_LOW_HATCH);
-            wrist.setPosition(WRIST_LOW_HATCH);
-        } else if (op.getDPadUp()) {
-            System.out.println("the bb got pressed " + WRIST_TOP_ROCKET_BALL);
+        }
+        else if (op.getXButton()) {
+            arm.setPosition(ARM_BOT_ROCKET_HATCH);
+            wrist.setPosition(WRIST_BOT_ROCKET_HATCH);
+        }
+        else if (op.getSquareButton()) {
+            arm.setPosition(ARM_CARGO_HATCH);
+            wrist.setPosition(WRIST_CARGO_HATCH);
+        }
+        else if (op.getDPadUp()) {
             arm.setPosition(ARM_TOP_ROCKET_BALL);
             wrist.setPosition(WRIST_TOP_ROCKET_BALL);
-        } else if (op.getDPadLeft()) {
+        }
+        else if (op.getDPadLeft()) {
             arm.setPosition(ARM_MID_ROCKET_BALL);
             wrist.setPosition(WRIST_MID_ROCKET_BALL);
-        } else if (op.getDPadDown()) {
+        }
+        else if (op.getDPadDown()) {
             arm.setPosition(ARM_BOT_ROCKET_BALL);
             wrist.setPosition(WRIST_BOT_ROCKET_BALL);
-        } else if (op.getDPadRight()) {
+        }
+        else if (op.getDPadRight()) {
             arm.setPosition(ARM_CARGO_BALL);
             wrist.setPosition(WRIST_CARGO_BALL);
         }
@@ -187,6 +185,7 @@ public class Operator {
             hatch.retract();
         }
     }
+  
     public Controller getController() {
         return op;
     }
