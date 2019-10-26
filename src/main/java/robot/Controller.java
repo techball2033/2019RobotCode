@@ -68,18 +68,18 @@ public class Controller extends Joystick {
 
     //POV
     public boolean getDPadUp() {
-        return (getPOV() > 270) && (getPOV() < 90);
+        return getPOV() == 0;
     }
 
     public boolean getDPadRight() {
-        return (getPOV() > 0) && (getPOV() < 180);
+        return getPOV() == 90;
     }
 
     public boolean getDPadDown() {
-        return (getPOV() > 90) && (getPOV() < 270);
+        return getPOV() == 180;
     }
 
     public boolean getDPadLeft() {
-        return (getPOV() > 180) && (getPOV() < 360);
+        return getPOV() == 270;
     }
 }

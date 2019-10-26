@@ -9,11 +9,11 @@ public class Wrist {
     private final int potRange = 2000;//Range of pot in degrees
     private final int potOffset = -1000;//Offset of pot from level
 
-    private final double p = 3;
-    private final double i = 0.006;
-    private final double d = 0;
+    private final double p = 0.0; //0.008
+    private final double i = 0.0;
+    private final double d = 0.0;
 
-    private final double maxSpeed = 1;
+    private final double maxSpeed = 1.0;
 
     private Spark wrist;
 
@@ -23,13 +23,17 @@ public class Wrist {
 
     public Wrist() {
         wrist = new Spark(5);
-        wrist.setInverted(false);
-
+        wrist.setInverted(true);
+      
         wristPot = new AnalogPotentiometer(1, potRange, potOffset);
 
         wristPID = new PIDController(p, i, d, wristPot, wrist);
         wristPID.setInputRange(potOffset, potRange+potOffset);
         wristPID.setOutputRange(-maxSpeed, maxSpeed);
+    }
+
+    public double pidOutput() {
+        return wristPID.get();
     }
 
     public void setPosition(double pos) {

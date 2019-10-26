@@ -11,9 +11,9 @@ public class Arm {
     private final int potRange = 2000;//Range of pot in degrees
     private final int potOffset = -1000;//Offset of pot from level
 
-    private final double p = 0.85;
-    private final double i = 0.01;
-    private final double d = 0;
+    private final double p = 0.0013;//0.85
+    private final double i = 0;//0.01
+    private final double d = 0;//0
 
     private final double maxSpeed = 1;
 

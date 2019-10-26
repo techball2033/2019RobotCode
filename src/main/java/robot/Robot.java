@@ -81,9 +81,8 @@ public class Robot extends TimedRobot {
 
     @Override
     public void testPeriodic() {
-        Scheduler.getInstance().run();
-
-        System.out.println("Wrist angle: " + op.getWristAngle());
-        System.out.println("Arm angle: " + op.getArmAngle());
+      // Scheduler.getInstance().run();
+      // System.out.println("Wrist angle: " + op.getWristAngle());
+      // System.out.println("Arm angle: " + op.getArmAngle());
     }
 }
