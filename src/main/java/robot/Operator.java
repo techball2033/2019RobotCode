@@ -35,7 +35,7 @@ public class Operator {
     public static double ARM_HIGH_RANGE;
 
     // Tolerance for limiting override range
-    public static double OVERRIDE_TOLERANCE = 2; //Should always be positive
+    public static final double OVERRIDE_TOLERANCE = 2; //Should always be positive
 
     //Speeds of wheels - Negative speed push ball out
     public static final double WHEELS_SPEED_IN = 0.7;
