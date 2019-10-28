@@ -153,7 +153,9 @@ public class Operator {
             }
             else {
                 if(Math.abs(op.getRightYAxis())>0.1) {
-                    wrist.setPosition(wrist.getSetpoint() + (-op.getRightYAxis())*PID_ADJUST_SCALE);
+                    if(((wrist.getSetpoint() + (-op.getRightYAxis())*PID_ADJUST_SCALE) < WRIST_HIGH_RANGE) && (((wrist.getSetpoint() + (-op.getRightYAxis())*PID_ADJUST_SCALE) > WRIST_LOW_RANGE))) {
+                        wrist.setPosition(wrist.getSetpoint() + (-op.getRightYAxis())*PID_ADJUST_SCALE);
+                    }
                 }
             }
         }
@@ -180,7 +182,9 @@ public class Operator {
             }
             else {
                 if(Math.abs(op.getLeftYAxis())>0.1) {
-                    arm.setPosition(arm.getSetpoint() + (-op.getLeftYAxis())*PID_ADJUST_SCALE);
+                    if(((arm.getSetpoint() + (-op.getLeftYAxis())*PID_ADJUST_SCALE) < ARM_HIGH_RANGE) && (((arm.getSetpoint() + (-op.getLeftYAxis())*PID_ADJUST_SCALE) > ARM_LOW_RANGE))) {
+                        arm.setPosition(arm.getSetpoint() + (-op.getLeftYAxis())*PID_ADJUST_SCALE);
+                    }
                 }
             }
         }
