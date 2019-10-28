@@ -144,6 +144,7 @@ public class Operator {
             }
             else {
                 wrist.stopWrist();
+                System.out.println("WRIST AT EDGE OF OVERRIDE RANGE");
             }
         }
         else {
@@ -170,6 +171,7 @@ public class Operator {
             }
             else {
                 arm.stopArm();
+                System.out.println("ARM AT EDGE OF OVERRIDE RANGE");
             }
         }
         else {
