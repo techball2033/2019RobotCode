@@ -41,6 +41,8 @@ public class Operator {
     public static final double WHEELS_SPEED_IN = 0.7;
     public static final double WHEELS_SPEED_OUT = -0.7;
 
+    public static final int PID_ADJUST_SCALE = 1;
+
     Controller op;
     Arm arm;
     HatchMechanism hatch;
@@ -110,7 +112,9 @@ public class Operator {
 
     private void wheelControl() {
         if (getWristAngle() > (WRIST_STARTUP - OVERRIDE_TOLERANCE)) {
-            System.out.println("Wheels cannot spin as the wrist is too close to the arm");
+            if(op.getRightBumper() || op.getLeftBumper())
+                System.out.println("Wheels cannot spin as the wrist is too close to the arm");
+            
             wheels.stopWheels();
 
             return; //Exits from the function before the speed can be set
@@ -122,6 +126,9 @@ public class Operator {
         else if (op.getLeftBumper()) {
             wheels.runWheels(WHEELS_SPEED_OUT);
         }
+        else {
+            wheels.stopWheels();
+        }
     }
 
     private void armWristOverride() {
@@ -129,9 +136,11 @@ public class Operator {
         if (op.getRightStickButton()) {
             if ((op.getRightYAxis() < 0) && (getWristAngle() < (WRIST_HIGH_RANGE - OVERRIDE_TOLERANCE))) {
                 wrist.override(-op.getRightYAxis() / 2);
+                System.out.println("Wrist going up");
             }
             else if ((op.getRightYAxis() > 0) && (getWristAngle() > (WRIST_LOW_RANGE + OVERRIDE_TOLERANCE))) {
                 wrist.override(-op.getRightYAxis() / 2);
+                System.out.println("Wrist going down");
             }
             else {
                 wrist.stopWrist();
@@ -141,15 +150,23 @@ public class Operator {
             if (!wrist.isPIDEnabled()) {
                 wrist.stopWrist();
             }
+            else {
+                if(Math.abs(op.getRightYAxis())>0.1) {
+                    wrist.setPosition(wrist.getSetpoint() + (-op.getRightYAxis())*PID_ADJUST_SCALE);
+                }
+            }
         }
 
         // Arm override controlled by left stick
         if (op.getLeftStickButton()) {
-            if (((op.getLeftYAxis() > 0) && (getArmAngle() < (ARM_HIGH_RANGE - OVERRIDE_TOLERANCE)))) {
-                arm.override(-op.getLeftYAxis());
+            double leftYAxis = -op.getLeftYAxis();
+            if (((leftYAxis > 0) && (getArmAngle() < (ARM_HIGH_RANGE - OVERRIDE_TOLERANCE)))) {
+                arm.override(leftYAxis);
+                System.out.println("Arm going up");
             }
             else if ((op.getLeftYAxis() < 0) && (getArmAngle() > (ARM_LOW_RANGE + OVERRIDE_TOLERANCE))) {
-                arm.override(-op.getLeftYAxis());
+                arm.override(leftYAxis);
+                System.out.println("Arm going down");
             }
             else {
                 arm.stopArm();
@@ -158,6 +175,11 @@ public class Operator {
         else {
             if (!arm.isPIDEnabled()) {
                 arm.stopArm();
+            }
+            else {
+                if(Math.abs(op.getLeftYAxis())>0.1) {
+                    arm.setPosition(arm.getSetpoint() + (-op.getLeftYAxis())*PID_ADJUST_SCALE);
+                }
             }
         }
     }
@@ -196,7 +218,8 @@ public class Operator {
     private void hatchControl() {
         if (op.getTriangleButton()) {
             hatch.place();
-        } else {
+        }
+        else {
             hatch.retract();
         }
     }

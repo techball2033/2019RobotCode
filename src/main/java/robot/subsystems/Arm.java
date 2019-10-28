@@ -33,6 +33,7 @@ public class Arm {
         right.setInverted(true);//Inverting one motor as they drive in different directions. CHECK WHICH SIDE TO INVERT.
 
         armGroup = new SpeedControllerGroup(left, right);
+        armGroup.setInverted(true);
 
         armPot = new AnalogPotentiometer(0, potRange, potOffset);
 
@@ -44,6 +45,10 @@ public class Arm {
     public void setPosition(double pos) {
         armPID.enable();
         armPID.setSetpoint(pos);
+    }
+
+    public double getSetpoint() {
+        return armPID.getSetpoint();
     }
 
     public void override(double speed) {
