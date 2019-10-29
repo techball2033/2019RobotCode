@@ -41,6 +41,10 @@ public class Wrist {
         wristPID.setSetpoint(pos);
     }
 
+    public double getSetpoint() {
+        return wristPID.getSetpoint();
+    }
+
     public void override(double speed) {
         wristPID.disable();
         wrist.set(speed);
