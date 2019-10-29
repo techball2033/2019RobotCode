@@ -153,16 +153,20 @@ public class Operator {
             }
             else {
                 if(Math.abs(op.getRightYAxis())>0.1) {
-                    if(((wrist.getSetpoint() + (-op.getRightYAxis())*PID_ADJUST_SCALE) < WRIST_HIGH_RANGE) && (((wrist.getSetpoint() + (-op.getRightYAxis())*PID_ADJUST_SCALE) > WRIST_LOW_RANGE))) {
-                        wrist.setPosition(wrist.getSetpoint() + (-op.getRightYAxis())*PID_ADJUST_SCALE);
+                    double newWristSetpoint = wrist.getSetpoint() + (-op.getRightYAxis())*PID_ADJUST_SCALE;
+                    if(-op.getRightYAxis() > 0 && newWristSetpoint < WRIST_HIGH_RANGE) {
+                        wrist.setPosition(newWristSetpoint);
+                    }
+                    else if(-op.getRightYAxis() < 0 && newWristSetpoint > WRIST_LOW_RANGE) {
+                        wrist.setPosition(newWristSetpoint);
                     }
                 }
             }
         }
 
         // Arm override controlled by left stick
+        double leftYAxis = -op.getLeftYAxis();
         if (op.getLeftStickButton()) {
-            double leftYAxis = -op.getLeftYAxis();
             if (((leftYAxis > 0) && (getArmAngle() < (ARM_HIGH_RANGE - OVERRIDE_TOLERANCE)))) {
                 arm.override(leftYAxis);
                 System.out.println("Arm going up");
@@ -181,9 +185,13 @@ public class Operator {
                 arm.stopArm();
             }
             else {
-                if(Math.abs(op.getLeftYAxis())>0.1) {
-                    if(((arm.getSetpoint() + (-op.getLeftYAxis())*PID_ADJUST_SCALE) < ARM_HIGH_RANGE) && (((arm.getSetpoint() + (-op.getLeftYAxis())*PID_ADJUST_SCALE) > ARM_LOW_RANGE))) {
-                        arm.setPosition(arm.getSetpoint() + (-op.getLeftYAxis())*PID_ADJUST_SCALE);
+                if(Math.abs(leftYAxis)>0.1) {
+                    double newArmSetpoint = arm.getSetpoint() + leftYAxis*PID_ADJUST_SCALE;
+                    if(leftYAxis > 0 && newArmSetpoint < ARM_HIGH_RANGE) {
+                        arm.setPosition(newArmSetpoint);
+                    }
+                    else if(leftYAxis < 0 && newArmSetpoint > ARM_LOW_RANGE) {
+                        arm.setPosition(newArmSetpoint);
                     }
                 }
             }
