@@ -41,7 +41,7 @@ public class Operator {
     public static final double WHEELS_SPEED_IN = 0.7;
     public static final double WHEELS_SPEED_OUT = -0.7;
 
-    public static final int PID_ADJUST_SCALE = 1;
+    public static final int PID_ADJUST_SCALE = 5;
 
     Controller op;
     Arm arm;
@@ -92,9 +92,9 @@ public class Operator {
         armWristControl();
         hatchControl();
 
-        //System.out.println(wrist.pidOutput());
-        System.out.println("position "+ arm.getPot().get());
-        System.out.println("set Pos "+ ARM_LOW_HATCH);
+        //System.out.println(wrist.pidOutput());o
+        System.out.println("position "+ wrist.getPot().get());
+        //System.out.println("set Pos "+ ARM_LOW_HATCH);
     }
 
     public void resetPID() {
@@ -168,11 +168,11 @@ public class Operator {
         double leftYAxis = -op.getLeftYAxis();
         if (op.getLeftStickButton()) {
             if (((leftYAxis > 0) && (getArmAngle() < (ARM_HIGH_RANGE - OVERRIDE_TOLERANCE)))) {
-                arm.override(leftYAxis);
+                arm.override(leftYAxis*0.3);
                 System.out.println("Arm going up");
             }
             else if ((op.getLeftYAxis() < 0) && (getArmAngle() > (ARM_LOW_RANGE + OVERRIDE_TOLERANCE))) {
-                arm.override(leftYAxis);
+                arm.override(leftYAxis*0.3);
                 System.out.println("Arm going down");
             }
             else {

@@ -9,11 +9,11 @@ public class Wrist {
     private final int potRange = 2000;//Range of pot in degrees
     private final int potOffset = -1000;//Offset of pot from level
 
-    private final double p = 0.0; //0.008
-    private final double i = 0.0;
+    private final double p = 0.004; //0.008
+    private final double i = 0.00005;
     private final double d = 0.0;
 
-    private final double maxSpeed = 1.0;
+    private final double maxSpeed = 0.3;
 
     private Spark wrist;
 
