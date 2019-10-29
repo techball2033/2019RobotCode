@@ -23,6 +23,11 @@ public class DriveTrain {
         rightFront = new WPI_VictorSPX(2);
         rightBack = new WPI_VictorSPX(3);
 
+        leftFront.setSafetyEnabled(false);
+        leftBack.setSafetyEnabled(false);
+        rightFront.setSafetyEnabled(false);
+        rightBack.setSafetyEnabled(false);
+
         leftSpeedGroup = new SpeedControllerGroup(leftFront,leftBack);
         rightSpeedGroup = new SpeedControllerGroup(rightFront,rightBack);
 
