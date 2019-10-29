@@ -1,6 +1,7 @@
 package robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -34,7 +35,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         if(RobotController.isBrownedOut()) {
-            System.out.println("Error: SYSTEM BROWNED OUT - CHANGE BATTERY");
+            DriverStation.reportWarning("System browned out - check battery", false);
         }
     }
 
