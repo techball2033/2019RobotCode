@@ -12,10 +12,10 @@ public class Arm {
     private final int potOffset = -1000;//Offset of pot from level
 
     private final double p = 0.0013;//0.85
-    private final double i = 0;//0.01
+    private final double i = 0.0001;//0.01
     private final double d = 0;//0
 
-    private final double maxSpeed = 1;
+    private final double maxSpeed = 0.3;
 
     private WPI_TalonSRX left;
     private WPI_TalonSRX right;
@@ -33,7 +33,7 @@ public class Arm {
         right.setInverted(true);//Inverting one motor as they drive in different directions. CHECK WHICH SIDE TO INVERT.
 
         armGroup = new SpeedControllerGroup(left, right);
-        armGroup.setInverted(true);
+        //armGroup.setInverted(true);
 
         armPot = new AnalogPotentiometer(0, potRange, potOffset);
 
