@@ -35,7 +35,7 @@ public class Operator {
     public static double ARM_HIGH_RANGE;
 
     // Tolerance for limiting override range
-    public static final double OVERRIDE_TOLERANCE = 5; //Should always be positive
+    public static final double OVERRIDE_TOLERANCE = 2; //Should always be positive
 
     //Speeds of wheels - Negative speed push ball out
     public static final double WHEELS_SPEED_IN = 0.7;
@@ -157,10 +157,10 @@ public class Operator {
             else {
                 if(Math.abs(op.getRightYAxis())>0.1) {
                     double newWristSetpoint = wrist.getSetpoint() + (-op.getRightYAxis())*PID_ADJUST_SCALE;
-                    if(-op.getRightYAxis() > 0 && newWristSetpoint < WRIST_HIGH_RANGE) {
+                    if(-op.getRightYAxis() > 0 && newWristSetpoint < (WRIST_HIGH_RANGE - OVERRIDE_TOLERANCE)) {
                         wrist.setPosition(newWristSetpoint);
                     }
-                    else if(-op.getRightYAxis() < 0 && newWristSetpoint > WRIST_LOW_RANGE) {
+                    else if(-op.getRightYAxis() < 0 && newWristSetpoint > (WRIST_LOW_RANGE + OVERRIDE_TOLERANCE)) {
                         wrist.setPosition(newWristSetpoint);
                     }
                 }
@@ -190,10 +190,10 @@ public class Operator {
             else {
                 if(Math.abs(leftYAxis)>0.1) {
                     double newArmSetpoint = arm.getSetpoint() + leftYAxis*PID_ADJUST_SCALE;
-                    if(leftYAxis > 0 && newArmSetpoint < ARM_HIGH_RANGE) {
+                    if(leftYAxis > 0 && newArmSetpoint < (ARM_HIGH_RANGE - OVERRIDE_TOLERANCE)) {
                         arm.setPosition(newArmSetpoint);
                     }
-                    else if(leftYAxis < 0 && newArmSetpoint > ARM_LOW_RANGE) {
+                    else if(leftYAxis < 0 && newArmSetpoint > (ARM_LOW_RANGE + OVERRIDE_TOLERANCE)) {
                         arm.setPosition(newArmSetpoint);
                     }
                 }
