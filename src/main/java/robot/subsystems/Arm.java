@@ -15,7 +15,8 @@ public class Arm {
     private final double i = 0.0001;//0.01
     private final double d = 0;//0
 
-    private final double maxSpeed = 0.3;
+    private final double maxUpPIDSpeed = 0.3;
+    private final double maxDownPIDSpeed = -0.3;
 
     private WPI_TalonSRX left;
     private WPI_TalonSRX right;
@@ -39,7 +40,7 @@ public class Arm {
 
         armPID = new PIDController(p, i, d, armPot, armGroup);
         armPID.setInputRange(potOffset, potRange+potOffset);
-        armPID.setOutputRange(-maxSpeed, maxSpeed);
+        armPID.setOutputRange(maxDownPIDSpeed, maxUpPIDSpeed);
     }
 
     public void setPosition(double pos) {
@@ -52,7 +53,9 @@ public class Arm {
     }
 
     public void override(double speed) {
-        armPID.disable();
+        if(armPID.isEnabled()) {
+            armPID.disable();
+        }
         armGroup.set(speed);
     }
 

@@ -35,13 +35,16 @@ public class Operator {
     public static double ARM_HIGH_RANGE;
 
     // Tolerance for limiting override range
-    public static final double OVERRIDE_TOLERANCE = 5; //Should always be positive
+    public static final double OVERRIDE_TOLERANCE = 2; //Should always be positive
 
     //Speeds of wheels - Negative speed push ball out
     public static final double WHEELS_SPEED_IN = 0.7;
     public static final double WHEELS_SPEED_OUT = -0.7;
 
-    public static final int PID_ADJUST_SCALE = 5;
+    public static final int PID_ADJUST_SCALE = 10;
+
+    public static final double WRIST_OVERRIDE_SPEED = 0.5;
+    public static final double ARM_OVERRIDE_SPEED = 0.3;
 
     Controller op;
     Arm arm;
@@ -92,7 +95,7 @@ public class Operator {
         armWristControl();
         hatchControl();
 
-        //System.out.println(wrist.pidOutput());o
+        //System.out.println(wrist.pidOutput());
         System.out.println("position "+ wrist.getPot().get());
         //System.out.println("set Pos "+ ARM_LOW_HATCH);
     }
@@ -135,11 +138,11 @@ public class Operator {
         // Wrist override controlled by right stick
         if (op.getRightStickButton()) {
             if ((op.getRightYAxis() < 0) && (getWristAngle() < (WRIST_HIGH_RANGE - OVERRIDE_TOLERANCE))) {
-                wrist.override(-op.getRightYAxis() / 2);
+                wrist.override(-op.getRightYAxis() * WRIST_OVERRIDE_SPEED);
                 System.out.println("Wrist going up");
             }
             else if ((op.getRightYAxis() > 0) && (getWristAngle() > (WRIST_LOW_RANGE + OVERRIDE_TOLERANCE))) {
-                wrist.override(-op.getRightYAxis() / 2);
+                wrist.override(-op.getRightYAxis() * WRIST_OVERRIDE_SPEED);
                 System.out.println("Wrist going down");
             }
             else {
@@ -153,22 +156,26 @@ public class Operator {
             }
             else {
                 if(Math.abs(op.getRightYAxis())>0.1) {
-                    if(((wrist.getSetpoint() + (-op.getRightYAxis())*PID_ADJUST_SCALE) < WRIST_HIGH_RANGE) && (((wrist.getSetpoint() + (-op.getRightYAxis())*PID_ADJUST_SCALE) > WRIST_LOW_RANGE))) {
-                        wrist.setPosition(wrist.getSetpoint() + (-op.getRightYAxis())*PID_ADJUST_SCALE);
+                    double newWristSetpoint = wrist.getSetpoint() + (-op.getRightYAxis())*PID_ADJUST_SCALE;
+                    if(-op.getRightYAxis() > 0 && newWristSetpoint < (WRIST_HIGH_RANGE - OVERRIDE_TOLERANCE)) {
+                        wrist.setPosition(newWristSetpoint);
+                    }
+                    else if(-op.getRightYAxis() < 0 && newWristSetpoint > (WRIST_LOW_RANGE + OVERRIDE_TOLERANCE)) {
+                        wrist.setPosition(newWristSetpoint);
                     }
                 }
             }
         }
 
         // Arm override controlled by left stick
+        double leftYAxis = -op.getLeftYAxis();
         if (op.getLeftStickButton()) {
-            double leftYAxis = -op.getLeftYAxis();
             if (((leftYAxis > 0) && (getArmAngle() < (ARM_HIGH_RANGE - OVERRIDE_TOLERANCE)))) {
-                arm.override(leftYAxis*0.3);
+                arm.override(leftYAxis * ARM_OVERRIDE_SPEED);
                 System.out.println("Arm going up");
             }
             else if ((op.getLeftYAxis() < 0) && (getArmAngle() > (ARM_LOW_RANGE + OVERRIDE_TOLERANCE))) {
-                arm.override(leftYAxis*0.3);
+                arm.override(leftYAxis * ARM_OVERRIDE_SPEED);
                 System.out.println("Arm going down");
             }
             else {
@@ -181,9 +188,13 @@ public class Operator {
                 arm.stopArm();
             }
             else {
-                if(Math.abs(op.getLeftYAxis())>0.1) {
-                    if(((arm.getSetpoint() + (-op.getLeftYAxis())*PID_ADJUST_SCALE) < ARM_HIGH_RANGE) && (((arm.getSetpoint() + (-op.getLeftYAxis())*PID_ADJUST_SCALE) > ARM_LOW_RANGE))) {
-                        arm.setPosition(arm.getSetpoint() + (-op.getLeftYAxis())*PID_ADJUST_SCALE);
+                if(Math.abs(leftYAxis)>0.1) {
+                    double newArmSetpoint = arm.getSetpoint() + leftYAxis*PID_ADJUST_SCALE;
+                    if(leftYAxis > 0 && newArmSetpoint < (ARM_HIGH_RANGE - OVERRIDE_TOLERANCE)) {
+                        arm.setPosition(newArmSetpoint);
+                    }
+                    else if(leftYAxis < 0 && newArmSetpoint > (ARM_LOW_RANGE + OVERRIDE_TOLERANCE)) {
+                        arm.setPosition(newArmSetpoint);
                     }
                 }
             }

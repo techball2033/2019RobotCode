@@ -1,5 +1,6 @@
 package robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.subsystems.*;
@@ -30,6 +31,6 @@ public class Driver {
         else if(driveType.getSelected().equals(tank))
             driveTrain.tankDrive(joy.getLeftYAxis(), joy.getRightYAxis());
         else
-            System.out.println("Error: No drive type chosen");
+            DriverStation.reportError("No drive type chosen", false);
     }
 }
