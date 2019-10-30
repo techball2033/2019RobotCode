@@ -13,7 +13,8 @@ public class Wrist {
     private final double i = 0.00005;
     private final double d = 0.0;
 
-    private final double maxPIDSpeed = 0.3;
+    private final double maxUpPIDSpeed = 0.3;
+    private final double maxDownPIDSpeed = -0.3;
 
     private Spark wrist;
 
@@ -29,7 +30,7 @@ public class Wrist {
 
         wristPID = new PIDController(p, i, d, wristPot, wrist);
         wristPID.setInputRange(potOffset, potRange+potOffset);
-        wristPID.setOutputRange(-maxPIDSpeed, maxPIDSpeed);
+        wristPID.setOutputRange(maxDownPIDSpeed, maxUpPIDSpeed);
     }
 
     public double pidOutput() {
