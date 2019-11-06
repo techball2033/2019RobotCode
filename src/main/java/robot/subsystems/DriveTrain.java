@@ -12,13 +12,13 @@ public class DriveTrain {
     private WPI_VictorSPX rightFront;
     private WPI_VictorSPX rightBack;
 
-    private SpeedControllerGroup leftSpeedGroup; 
+    private SpeedControllerGroup leftSpeedGroup;            
     private SpeedControllerGroup rightSpeedGroup;
 
     private DifferentialDrive driveType;
 
     public DriveTrain() {
-        leftFront = new WPI_VictorSPX(0);
+        leftFront = new WPI_VictorSPX(0);           //Each port in the victorSPX is what you talk to
         leftBack = new WPI_VictorSPX(1);
         rightFront = new WPI_VictorSPX(2);
         rightBack = new WPI_VictorSPX(3);
@@ -31,18 +31,20 @@ public class DriveTrain {
         rightBack.setSafetyEnabled(false);
         */
 
-        leftSpeedGroup = new SpeedControllerGroup(leftFront,leftBack);
+        leftSpeedGroup = new SpeedControllerGroup(leftFront,leftBack);      //Speed controller group is the motor controller groups
+        //Front and back have to be equal
         rightSpeedGroup = new SpeedControllerGroup(rightFront,rightBack);
+        //Speed groups will always be identical
 
         driveType = new DifferentialDrive(leftSpeedGroup,rightSpeedGroup);
         driveType.setSafetyEnabled(false);
     }
 
-    public void tankDrive(double left, double right) {
-        driveType.tankDrive(left, right);
+    public void tankDrive(double left, double right) {      //Takes in two parameters & input from the joysticks
+        driveType.tankDrive(left, right);           //
     }
 
-    public void arcadeDrive(double straight, double left, double right) { 
+    public void arcadeDrive(double straight, double left, double right) { //Takes in two parameters & input from the joysticks & left/right trigger movement
         leftSpeedGroup.set(straight + left - right);
         rightSpeedGroup.set(-(straight - left + right)); 
     }
