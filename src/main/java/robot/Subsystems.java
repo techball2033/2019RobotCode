@@ -11,8 +11,8 @@ public class Driver {
 
     DriveTrain driveTrain;
 
-    private SendableChooser<Byte> driveType;
-    private final Byte arcade = 0;
+    private SendableChooser<Byte> driveType;            //Creates an arraylist
+    private final Byte arcade = 0;          //Makes arcade false and tack drive true
     private final Byte tank = 1;
 
     public Driver(int port) {
@@ -26,9 +26,9 @@ public class Driver {
     }
 
     public void runDriveControls() {
-        if(driveType.getSelected().equals(arcade))
+        if(driveType.getSelected().equals(arcade))          //Sets joystick for arcade drive
             driveTrain.arcadeDrive(joy.getRightYAxis(), joy.getLeftTrigger(), joy.getRightTrigger());
-        else if(driveType.getSelected().equals(tank))
+        else if(driveType.getSelected().equals(tank))       //Sets joystick for tank drive
             driveTrain.tankDrive(joy.getLeftYAxis(), joy.getRightYAxis());
         else
             DriverStation.reportError("No drive type chosen", false);
